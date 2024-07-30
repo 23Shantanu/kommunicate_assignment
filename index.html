@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advice</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #202632;
+        margin: 0;
+      }
+      .container {
+        position: relative;
+        width: 100%;
+        background-color: #313a49;
+        color: #ffffff;
+        padding: 50px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .advice {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+      .divider {
+        margin-bottom: 1rem;
+      }
+      .inner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .dice-icon {
+        background-color: #51fda9;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        bottom: -11%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .dice-icon img {
+        background: #51fda9;
+        border-radius: 0.2rem;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="outer-container">
+      <div class="container">
+        <div class="advice">
+          <p>ADVICE <span id="advice-id"></span></p>
+          <p id="advice-text"></p>
+        </div>
+        <img
+          class="divider"
+          src="/images/pattern-divider-desktop.svg"
+          alt="divider"
+        />
+        <div class="inner-container">
+          <div class="dice-icon" onclick="rollDice()">
+            <img src="/images/icon-dice.svg" alt="Dice Icon" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function rollDice() {
+        fetch("https://api.adviceslip.com/advice")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("advice-id")?.innerText = data?.slip?.id;
+            document.getElementById("advice-text")?.innerText = data?.slip?.advice;
+          })
+          .catch((error) => console.error("Error fetching advice:", error));
+      }
+    </script>
+  </body>
+</html>
